@@ -107,11 +107,13 @@ class SnakatronEnvironment extends Environment {
         graphics.fillOval(800, 550, 100, 100);
         //BLUE Ovals
         graphics.setColor(BLUE);
+        graphics.fillOval(538, 898, 84, 84);
         graphics.fillOval(358, 638, 84, 84);
         graphics.fillOval(870, 230, 100, 100);
         graphics.setColor(BLUE_TRANSPARENT);
         graphics.fillOval(350, 630, 100, 100);
-        
+        graphics.fillOval(878, 238, 84, 84);
+        graphics.fillOval(530, 890, 100, 100);
         
         graphics.fillOval(878, 238, 84, 84);
         //YELLOW Ovals
@@ -126,9 +128,6 @@ class SnakatronEnvironment extends Environment {
         graphics.fillOval(508, 108, 84, 84);
         graphics.setColor(ORANGE_TRANSPARENT);
         graphics.fillOval(500, 100, 100, 100);
-        
-        
-        
         //GREY and WHITE Ovals
         graphics.setColor(LIGHTGREY);
         graphics.fillOval(1250, 750, 100, 100);
