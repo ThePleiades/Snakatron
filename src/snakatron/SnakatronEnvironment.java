@@ -23,7 +23,7 @@ import javafx.scene.shape.Circle;
  *
  * @author david
  */
-class SnakatronEnvironment extends Environment implements GridDrawDataIntf {
+class SnakatronEnvironment extends Environment implements GridDrawDataIntf, LocationValidatorIntf {
     
 
     private Snake snake;
@@ -37,9 +37,9 @@ class SnakatronEnvironment extends Environment implements GridDrawDataIntf {
     public void initializeEnvironment() {
         this.setBackground(Color.WHITE);
         
-        grid = new Grid(26, 26, 25, 25, new Point(50, 50), Color.PINK);
+        grid = new Grid(26, 26, 25, 25, new Point(50, 50), Color.BLACK);
         
-        snake = new Snake();
+        snake = new Snake(this);
         snake.setColor(GREEN);
         snake.setDrawData(this);
 
@@ -55,23 +55,31 @@ class SnakatronEnvironment extends Environment implements GridDrawDataIntf {
 
     @Override
     public void timerTaskHandler() {
+        if (snake != null) {
+            snake.move();
+        }
 
     }
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
-
         if (e.getKeyCode() == KeyEvent.VK_B) {
             snake.setColor(BLACK);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             snake.setColor(Color.WHITE);
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_C) {
+        } else if (e.getKeyCode() == KeyEvent.VK_M) {
+            snake.move();
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+            snake.setDirection(Direction.UP);
+        } else if (e.getKeyCode() == KeyEvent.VK_A) {
+            snake.setDirection(Direction.LEFT);
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+            snake.setDirection(Direction.DOWN);
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+            snake.setDirection(Direction.RIGHT);
+        } else if (e.getKeyCode() == KeyEvent.VK_C) {
             System.out.println("Circle colour = " + snake.getColor());
         }
-
     }
 
     @Override
@@ -132,6 +140,23 @@ class SnakatronEnvironment extends Environment implements GridDrawDataIntf {
     @Override
     public Point getCellSystemCoordinate(Point cellLocation) {
         return grid.getCellSystemCoordinate(cellLocation);
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="LocationValidatorIntf Methods">
+    @Override
+    public Point validate(Snake snake, Point location) {
+        if (location.x >= grid.getColumns()) {
+            location.x = 0;
+        } else if (location.x < 0) {
+            location.x = grid.getColumns()-1;
+        } else if (location.y < 0) {
+            location.y = grid.getRows()-1;
+        } else if (location.y >= grid.getRows()) {
+            location.y = 0;
+        }
+        
+        return location;
     }
 //</editor-fold>
 
