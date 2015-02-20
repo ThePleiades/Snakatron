@@ -15,6 +15,20 @@ import java.util.ArrayList;
  * @author david
  */
 public class Snake {
+
+    /**
+     * @return the HEAD_POSITION
+     */
+    public static int getHEAD_POSITION() {
+        return HEAD_POSITION;
+    }
+
+    /**
+     * @param aHEAD_POSITION the HEAD_POSITION to set
+     */
+    public static void setHEAD_POSITION(int aHEAD_POSITION) {
+        HEAD_POSITION = aHEAD_POSITION;
+    }
    
     {
         setBody(new ArrayList<>());
@@ -38,7 +52,8 @@ public class Snake {
     }
 
     public void move() {
-        if (!paused) {
+        
+        if (paused) {
             int x = getHead().x;
             int y = getHead().y;
 
@@ -58,11 +73,11 @@ public class Snake {
                 newHead = validator.validate(this, newHead);
             }
 
-            body.add(HEAD_POSITION, newHead);
+            body.add(getHEAD_POSITION(), newHead);
             if (growthCounter > 0) { // need to grow the snake, so dont delete the tail, but MUST reduce the growth counter...
                 growthCounter--;
             } else { // dont grow, so need to delete the tail...
-                body.remove(body.size() - 1);
+                shrink(1);
             }
         }
 
@@ -70,6 +85,12 @@ public class Snake {
     
     public void grow(int length) {
         growthCounter += length;
+    }
+    
+    public void shrink(int length) {
+        for (int i = 0; i < length; i++) {
+            body.remove(body.size() - 1);
+        }
     }
 
     // pause
@@ -102,13 +123,13 @@ public class Snake {
         this.color = color;
     }
 
-    private static int HEAD_POSITION = 0;
+    public static int HEAD_POSITION = 0;
 
     /**
      * @return the head
      */
     public Point getHead() {
-        return body.get(HEAD_POSITION);
+        return body.get(getHEAD_POSITION());
     }
 
     /**
@@ -135,7 +156,7 @@ public class Snake {
     public void setBody(ArrayList<Point> body) {
         this.body = body;
     }
-
+    
     /**
      * @return the drawData
      */

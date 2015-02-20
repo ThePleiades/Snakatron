@@ -21,7 +21,7 @@ public class Snakatron {
     }
 
     private static void startWindow() {
-        ApplicationStarter.run("Snakatron!", new SnakatronEnvironment());
+        ApplicationStarter.run("SNAKE-A-TRON", new SnakatronEnvironment());
     }
     
 }
